@@ -1,9 +1,10 @@
-package com.test;
+package com.agilecrm.examples;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.agilecrm.api.APIManager;
+import com.agilecrm.api.AgileConnection;
 import com.agilecrm.api.DealAPI;
 import com.agilecrm.stubs.Deal;
 
@@ -24,7 +25,7 @@ public class TestDeal
 	try
 	{
 	    // Create a connection to Agile CRM
-	    APIManager apiManager = AgileConnection.getConnection();
+	    APIManager apiManager = new AgileConnection().getConnection();
 
 	    // Get the Deal API with configured resource
 	    DealAPI dealApi = apiManager.getDealAPI();

@@ -6,10 +6,10 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.annotate.JsonProperty;
-import org.json.JSONObject;
 
-import com.agilecrm.stubs.ContactField.FieldName;
 import com.agilecrm.stubs.ContactField.FieldType;
+import com.agilecrm.stubs.ContactField.FieldName;
+import org.codehaus.jettison.json.JSONObject;
 
 @XmlRootElement
 public class Contact

@@ -8,8 +8,6 @@ import java.util.Map.Entry;
 import javax.ws.rs.core.MediaType;
 
 import org.codehaus.jackson.map.ObjectMapper;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import com.agilecrm.stubs.Contact;
 import com.agilecrm.stubs.ContactCollection;
@@ -20,6 +18,8 @@ import com.agilecrm.utils.StringUtils;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.representation.Form;
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONObject;
 
 /**
  * <code>ContactAPI</code> class contains methods to add, get, update and delete

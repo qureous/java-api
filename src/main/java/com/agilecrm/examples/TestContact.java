@@ -1,18 +1,19 @@
-package com.test;
+package com.agilecrm.examples;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONObject;
 
 import com.agilecrm.api.APIManager;
+import com.agilecrm.api.AgileConnection;
 import com.agilecrm.api.ContactAPI;
 import com.agilecrm.stubs.Contact;
 import com.agilecrm.stubs.Contact.Type;
 import com.agilecrm.stubs.ContactField.FieldName;
 import com.agilecrm.stubs.Tag;
+import org.codehaus.jettison.json.JSONObject;
 
 /**
  * <code>TestContact</code> class contains main method to test all the methods
@@ -32,7 +33,7 @@ public class TestContact
 	try
 	{
 	    // Create a connection to Agile CRM
-	    APIManager apiManager = AgileConnection.getConnection();
+	    APIManager apiManager = new AgileConnection().getConnection();
 
 	    // Get the Contact API with configured resource
 	    ContactAPI contactApi = apiManager.getContactAPI();

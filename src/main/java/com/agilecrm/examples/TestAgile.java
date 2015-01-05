@@ -1,4 +1,4 @@
-package com.test;
+package com.agilecrm.examples;
 
 import java.util.List;
 

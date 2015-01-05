@@ -1,9 +1,10 @@
-package com.test;
+package com.agilecrm.examples;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.agilecrm.api.APIManager;
+import com.agilecrm.api.AgileConnection;
 import com.agilecrm.api.NoteAPI;
 import com.agilecrm.stubs.Note;
 
@@ -23,7 +24,7 @@ public class TestNote
 	try
 	{
 	    // Create a connection to Agile CRM
-	    APIManager apiManager = AgileConnection.getConnection();
+	    APIManager apiManager = new AgileConnection().getConnection();
 
 	    // Get the Note API with configured resource
 	    NoteAPI noteApi = apiManager.getNoteAPI();

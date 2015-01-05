@@ -1,81 +1,85 @@
 package com.agilecrm.examples;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.agilecrm.api.APIManager;
 import com.agilecrm.api.AgileConnection;
+import com.agilecrm.api.ContactAPI;
 import com.agilecrm.api.NoteAPI;
+import com.agilecrm.stubs.Contact;
 import com.agilecrm.stubs.Note;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * <code>TestNote</code> class contains main method to test the methods in
  * <code>NoteAPI</code> class.
- * 
+ *
  * @author Tejaswi
- * @since March 2013
  * @see NoteAPI
+ * @since March 2013
  */
-public class TestNote
-{
+public class TestNote {
 
-    public static void main(String[] args)
-    {
-	try
-	{
-	    // Create a connection to Agile CRM
-	    APIManager apiManager = new AgileConnection().getConnection();
+    public static void main(String[] args) {
+        try {
+            // Create a connection to Agile CRM
+            APIManager apiManager = new AgileConnection().getConnection();
 
-	    // Get the Note API with configured resource
-	    NoteAPI noteApi = apiManager.getNoteAPI();
+            // Get the Note API with configured resource
+            NoteAPI noteApi = apiManager.getNoteAPI();
 
-	    // List of contact id's to which notes are added
-	    List<String> contactIds = new ArrayList<String>();
-	    contactIds.add("967");
-	    contactIds.add("968");
-	    contactIds.add("969");
+            // List of contact id's to which notes are added
+            List<String> contactIds = new ArrayList<String>();
 
-	    // Adding note
-	    Note note1 = new Note();
+            // create list of ids by finding contacts by email address,
+            // this initial contact was created by running TestContact
+            ContactAPI contactAPI = apiManager.getContactAPI();
+            List<String> emails = Arrays.asList("test1@agilecrm.com");
+            for (String email : emails) {
+                Contact contact = contactAPI.getContactFromEmail("test1@agilecrm.com");
+                contactIds.add(contact.getId().toString());
+            }
 
-	    note1.setSubject("Test Note1");
-	    note1.setDescription("Testing to add note1");
+            // Adding note
+            Note note1 = new Note();
 
-	    note1 = noteApi.addNoteToContactIds(note1, contactIds);
+            note1.setSubject("Test Note1");
+            note1.setDescription("Testing to add note1");
 
-	    System.out.println("Added note..." + note1);
+            note1 = noteApi.addNoteToContactIds(note1, contactIds);
 
-	    // Another method to add note
-	    Note note2 = new Note();
+            System.out.println("Added note..." + note1);
 
-	    note2 = noteApi.addNoteToContactIds("Test Note2",
-		    "Testing to add note2", contactIds);
+            // Another method to add note
+            Note note2 = new Note();
 
-	    System.out.println("Added note..." + note2);
+            note2 = noteApi.addNoteToContactIds("Test Note2",
+                    "Testing to add note2", contactIds);
 
-	    // Get notes of a contact
-	    List<Note> notes = noteApi.getNotesByContactId(contactIds.get(0));
+            System.out.println("Added note..." + note2);
 
-	    System.out.println("All notes of contact.. " + notes);
+            // Get notes of a contact
+            List<Note> notes = noteApi.getNotesByContactId(contactIds.get(0));
 
-	    // Delete note of a contact by note id
-	    String noteId = String.valueOf(notes.get(0).getId());
+            System.out.println("All notes of contact.. " + notes);
 
-	    noteApi.deleteNoteByContactId(contactIds.get(0), noteId);
+            // Delete note of a contact by note id
+            String noteId = String.valueOf(notes.get(0).getId());
 
-	    System.out.println("Deleted note.. " + noteId + " "
-		    + contactIds.get(0));
+            noteApi.deleteNoteByContactId(contactIds.get(0), noteId);
 
-	    notes = noteApi.getNotesByContactId(contactIds.get(0));
+            System.out.println("Deleted note.. " + noteId + " "
+                    + contactIds.get(0));
 
-	    System.out.println("All notes of contact.. " + notes);
+            notes = noteApi.getNotesByContactId(contactIds.get(0));
 
-	}
-	catch (Exception e)
-	{
-	    System.out.println(e.getMessage());
-	    e.printStackTrace();
-	}
+            System.out.println("All notes of contact.. " + notes);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
 
     }
 }

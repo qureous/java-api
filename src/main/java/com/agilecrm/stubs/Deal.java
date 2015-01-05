@@ -10,7 +10,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 public class Deal
 {
     @JsonProperty("id")
-    private Integer id;
+    private Long id;
 
     @JsonProperty("name")
     private String name;
@@ -59,12 +59,12 @@ public class Deal
 	this.owner_id = owner.getId();
     }
 
-    public Integer getId()
+    public Long getId()
     {
 	return id;
     }
 
-    public void setId(Integer id)
+    public void setId(Long id)
     {
 	this.id = id;
     }

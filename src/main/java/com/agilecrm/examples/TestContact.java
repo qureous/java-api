@@ -1,11 +1,5 @@
 package com.agilecrm.examples;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-
 import com.agilecrm.api.APIManager;
 import com.agilecrm.api.AgileConnection;
 import com.agilecrm.api.ContactAPI;
@@ -15,162 +9,161 @@ import com.agilecrm.stubs.ContactField.FieldName;
 import com.agilecrm.stubs.Tag;
 import org.codehaus.jettison.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * <code>TestContact</code> class contains main method to test all the methods
  * in <code>ContactAPI</code> class
- * 
+ *
  * @author Tejaswi
- * @since March 2013
  * @see ContactAPI
- * 
+ * @since March 2013
  */
-public class TestContact
-{
+public class TestContact {
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
 
-	try
-	{
-	    // Create a connection to Agile CRM
-	    APIManager apiManager = new AgileConnection().getConnection();
+        try {
+            // Create a connection to Agile CRM
+            APIManager apiManager = new AgileConnection().getConnection();
 
-	    // Get the Contact API with configured resource
-	    ContactAPI contactApi = apiManager.getContactAPI();
+            // Get the Contact API with configured resource
+            ContactAPI contactApi = apiManager.getContactAPI();
 
-	    // List of tags to add it to contact
-	    List<String> tags;
+            // List of tags to add it to contact
+            List<String> tags;
 
-	    // -------------------- Adding a company --------------------------
-	    Contact company = new Contact();
+            // -------------------- Adding a company --------------------------
+            Contact company = new Contact();
 
-	    company.setType(Type.COMPANY);
-	    company.setContactField(FieldName.COMPANY, "AgileCRM");
-	    company.setContactField(FieldName.URL, "http://www.agilecrm.com");
+            company.setType(Type.COMPANY);
+            company.setContactField(FieldName.COMPANY, "AgileCRM");
+            company.setContactField(FieldName.URL, "http://www.agilecrm.com");
 
-	    tags = new ArrayList<String>();
-	    tags.add("Product based");
-	    company.setTags(tags);
+            tags = new ArrayList<String>();
+            tags.add("Product based");
+            company.setTags(tags);
 
-	    company = contactApi.addContact(company);
+            company = contactApi.addContact(company);
 
-	    System.out.println("Added company... " + company);
+            System.out.println("Added company... " + company);
 
-	    // ------------------- Adding a person ----------------------------
-	    Contact person1 = new Contact();
+            // ------------------- Adding a person ----------------------------
+            Contact person1 = new Contact();
 
-	    person1.setType(Type.PERSON);
-	    person1.setLead_score(3);
-	    person1.setContactField(FieldName.FIRST_NAME, "Test");
-	    person1.setContactField(FieldName.LAST_NAME, "Add1");
-	    person1.setContactField(FieldName.ORGANIZATION, "Agile");
-	    person1.setContactField(FieldName.EMAIL, "test1@agilecrm.com");
-	    person1.setContactField(FieldName.TITLE, "Software developer");
-	    person1.setContactField(FieldName.PHONE, "+48624981");
-	    person1.setContactField(FieldName.WEBSITE,
-		    "http://agile-crm-cloud.appspot.com");
-	    JSONObject address = new JSONObject();
-	    address.put("city", "new delhi");
-	    address.put("state", "delhi");
-	    address.put("country", "india");
-	    person1.setContactField(FieldName.ADDRESS, address.toString());
-	    
-	    person1.setCustomField("Test", "Test Add Custom Field");
-	    
-	    tags = new ArrayList<String>();
-	    tags.add("developer");
-	    person1.setTags(tags);
+            person1.setType(Type.PERSON);
+            person1.setLead_score(3);
+            person1.setContactField(FieldName.FIRST_NAME, "Test");
+            person1.setContactField(FieldName.LAST_NAME, "Add1");
+            person1.setContactField(FieldName.ORGANIZATION, "Agile");
+            person1.setContactField(FieldName.EMAIL, "test1@agilecrm.com");
+            person1.setContactField(FieldName.TITLE, "Software developer");
+            person1.setContactField(FieldName.PHONE, "+48624981");
+            person1.setContactField(FieldName.WEBSITE,
+                    "http://agile-crm-cloud.appspot.com");
+            JSONObject address = new JSONObject();
+            address.put("city", "new delhi");
+            address.put("state", "delhi");
+            address.put("country", "india");
+            person1.setContactField(FieldName.ADDRESS, address.toString());
 
-	    person1 = contactApi.addContact(person1);
+            person1.setCustomField("Test", "Test Add Custom Field");
 
-	    System.out.println("Added person... " + person1);
+            tags = new ArrayList<String>();
+            tags.add("developer");
+            person1.setTags(tags);
 
-	    // -------------- Another method to add person --------------------
-	    Contact person2 = new Contact();
+            person1 = contactApi.addContact(person1);
 
-	    person2 = contactApi.addContact("Test", "Add2", "AgileCRM",
-		    "test2@agilecrm.com", "Quality Analyst", "+1687621786",
-		    "http://www.agilecrm.com");
+            System.out.println("Added person... " + person1);
 
-	    System.out.println("Added person... " + person2);
+            // -------------- Another method to add person --------------------
+            Contact person2 = new Contact();
 
-	    // --------------------- Get contacts -----------------------------
-	    List<Contact> contacts = contactApi.getContacts();
+            person2 = contactApi.addContact("Test", "Add2", "AgileCRM",
+                    "test2@agilecrm.com", "Quality Analyst", "+1687621786",
+                    "http://www.agilecrm.com");
 
-	    System.out.println("All contacts.." + contacts);
+            System.out.println("Added person... " + person2);
 
-	    // ----------------- Get contact by contact id --------------------
-	    Contact contact = new Contact();
+            // --------------------- Get contacts -----------------------------
+            List<Contact> contacts = contactApi.getContacts();
 
-	    contact = contactApi.getContact(String.valueOf(person2.getId()));
+            System.out.println("All contacts.." + contacts);
 
-	    System.out.println("Got contact by id... " + contact);
+            // ----------------- Get contact by contact id --------------------
+            Contact contact = new Contact();
 
-	    // ---------------- Get contact from email ------------------------
-	    contact = contactApi.getContactFromEmail("test1@agilecrm.com");
+            contact = contactApi.getContact(String.valueOf(person2.getId()));
 
-	    System.out.println("Got contact by email... " + contact);
+            System.out.println("Got contact by id... " + contact);
 
-	    // -------------------- update contact ----------------------------
-	    contact.setContactField(FieldName.LAST_NAME, "Update1");
+            // ---------------- Get contact from email ------------------------
+            contact = contactApi.getContactFromEmail("test1@agilecrm.com");
 
-	    contact = contactApi.updateContact(contact);
+            System.out.println("Got contact by email... " + contact);
 
-	    System.out.println("updated contact... " + contact);
+            // -------------------- update contact ----------------------------
+            contact.setContactField(FieldName.LAST_NAME, "Update1");
 
-	    // --------------- update contact by id ----------------------------
-	    Map<FieldName, String> contactFields = new HashMap<FieldName, String>();
-	    contactFields.put(FieldName.TITLE, "software engineer");
-	    contactFields.put(FieldName.LAST_NAME, "Update2");
+            contact = contactApi.updateContact(contact);
 
-	    // Adding custom fields to contact -----------------
-	    Map<String, String> customFields = new HashMap<String, String>();
-	    customFields.put("Test custom field", "Test");
+            System.out.println("updated contact... " + contact);
 
-	    contact = contactApi.updateContact(String.valueOf(person2.getId()),
-		    contactFields, customFields);
+            // --------------- update contact by id ----------------------------
+            Map<FieldName, String> contactFields = new HashMap<FieldName, String>();
+            contactFields.put(FieldName.TITLE, "software engineer");
+            contactFields.put(FieldName.LAST_NAME, "Update2");
 
-	    System.out.println("updated contact... " + contact);
+            // Adding custom fields to contact -----------------
+            Map<String, String> customFields = new HashMap<String, String>();
+            customFields.put("Test custom field", "Test");
 
-	    // ----------- Adding tags to contacts based on contact id's ------
-	    tags = new ArrayList<String>();
-	    tags.add("Professor");
-	    tags.add("Consultant");
-	    tags.add("Dealer");
+            contact = contactApi.updateContact(String.valueOf(person2.getId()),
+                    contactFields, customFields);
 
-	    List<String> contactIds = new ArrayList<String>();
-	    contactIds.add(String.valueOf(person1.getId()));
-	    contactIds.add(String.valueOf(person2.getId()));
+            System.out.println("updated contact... " + contact);
 
-	    contactApi.addTagsToContacts(tags, contactIds);
+            // ----------- Adding tags to contacts based on contact id's ------
+            tags = new ArrayList<String>();
+            tags.add("Professor");
+            tags.add("Consultant");
+            tags.add("Dealer");
 
-	    System.out.println("Added tags to contact ids............");
+            List<String> contactIds = new ArrayList<String>();
+            contactIds.add(String.valueOf(person1.getId()));
+            contactIds.add(String.valueOf(person2.getId()));
 
-	    // ------------ Adding tag to contact based on email -------------
-	    Tag tag = new Tag();
-	    tag.setTag("CEO");
+            contactApi.addTagsToContacts(tags, contactIds);
 
-	    contactApi.addTagsToEmail(tag, "test2@agilecrm.com");
+            System.out.println("Added tags to contact ids............");
 
-	    System.out.println("Added tag based on email..............");
+            // ------------ Adding tag to contact based on email -------------
+            Tag tag = new Tag();
+            tag.setTag("CEO");
 
-	    // ------------ delete contact by contact id --------------------
-	    contactApi.deleteContact(String.valueOf(person2.getId()));
+            contactApi.addTagsToEmail(tag, "test2@agilecrm.com");
 
-	    // ------------- delete bulk contacts ------------------------
-	    contactIds = new ArrayList<String>();
-	    contactIds.add(String.valueOf(person1.getId()));
-	    contactIds.add(String.valueOf(company.getId()));
+            System.out.println("Added tag based on email..............");
 
-	    contactApi.deleteBulkContacts(contactIds);
+            // ------------ delete contact by contact id --------------------
+            contactApi.deleteContact(String.valueOf(person2.getId()));
 
-	    //-------Adds a contact property, updates if it already exists---
-	    contactApi.addProperty("middlename", "crm", "test1@agilecrm.com");
-	}
-	catch (Exception e)
-	{
-	    System.out.println("message" + e.getMessage());
-	    e.printStackTrace();
-	}
+            // ------------- delete bulk contacts ------------------------
+            contactIds = new ArrayList<String>();
+            contactIds.add(String.valueOf(person1.getId()));
+            contactIds.add(String.valueOf(company.getId()));
+
+            contactApi.deleteBulkContacts(contactIds);
+
+            //-------Adds a contact property, updates if it already exists---
+            contactApi.addProperty("middlename", "crm", "test1@agilecrm.com");
+        } catch (Exception e) {
+            System.out.println("message" + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

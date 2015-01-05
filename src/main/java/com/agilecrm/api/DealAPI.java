@@ -174,8 +174,10 @@ public class DealAPI
 	if (StringUtils.isNullOrEmpty(new String[] { dealId }))
 	    throw new Exception("Please specify deal id to get the deal");
 
-	Deal deal = resource.path("api/opportunity/" + dealId)
-		.accept(MediaType.APPLICATION_XML).get(Deal.class);
+//	Deal deal = resource.path("api/opportunity/" + dealId)
+//		.accept(MediaType.APPLICATION_XML).get(Deal.class);
+        Deal deal = resource.path("api/opportunity/" + dealId)
+                .accept(MediaType.APPLICATION_JSON).get(Deal.class);
 
 	return deal;
     }

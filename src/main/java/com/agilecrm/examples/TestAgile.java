@@ -1,35 +1,30 @@
 package com.agilecrm.examples;
 
-import java.util.List;
-
 import com.agilecrm.api.APIManager;
+import com.agilecrm.api.AgileConnection;
 import com.agilecrm.api.ContactAPI;
 import com.agilecrm.stubs.Contact;
 
-public class TestAgile
-{
-    public static void main(String[] args)
-    {
-	try
-	{
-	    String baseUrl = "https://<Your Domain>.agilecrm.com/dev";
-	    String userName = "AgileCRM username";
-	    String apiKey = "AgileCRM apikey";
+import java.util.List;
 
-	    // Create a connection to Agile CRM
-	    APIManager apiManager = new APIManager(baseUrl, userName, apiKey);
+public class TestAgile {
 
-	    // Get the Contact API with configured resource
-	    ContactAPI contactApi = apiManager.getContactAPI();
+    public static void main(String[] args) {
+        try {
+            AgileConnection agileConnection = new AgileConnection();
 
-	    // --------------------- Get contacts -----------------------------
-	    List<Contact> contacts = contactApi.getContacts();
-	    System.out.println("All contacts.. " + contacts);
-	}
-	catch (Exception e)
-	{
-	    System.out.println("Exception message.. " + e.getMessage());
-	    e.printStackTrace();
-	}
+            // Create a connection to Agile CRM
+            APIManager apiManager = agileConnection.getConnection();
+
+            // Get the Contact API with configured resource
+            ContactAPI contactApi = apiManager.getContactAPI();
+
+            // --------------------- Get contacts -----------------------------
+            List<Contact> contacts = contactApi.getContacts();
+            System.out.println("All contacts.. " + contacts);
+        } catch (Exception e) {
+            System.out.println("Exception message.. " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

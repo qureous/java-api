@@ -6,6 +6,8 @@ import com.agilecrm.api.ContactAPI;
 import com.agilecrm.api.NoteAPI;
 import com.agilecrm.stubs.Contact;
 import com.agilecrm.stubs.Note;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +22,8 @@ import java.util.List;
  * @since March 2013
  */
 public class TestNote {
+
+    private static final Logger logger = LoggerFactory.getLogger(TestNote.class);
 
     public static void main(String[] args) {
         try {
@@ -49,7 +53,7 @@ public class TestNote {
 
             note1 = noteApi.addNoteToContactIds(note1, contactIds);
 
-            System.out.println("Added note..." + note1);
+            logger.info("Added note... {}", note1);
 
             // Another method to add note
             Note note2 = new Note();
@@ -57,28 +61,26 @@ public class TestNote {
             note2 = noteApi.addNoteToContactIds("Test Note2",
                     "Testing to add note2", contactIds);
 
-            System.out.println("Added note..." + note2);
+            logger.info("Added note... {}", note2);
 
             // Get notes of a contact
             List<Note> notes = noteApi.getNotesByContactId(contactIds.get(0));
 
-            System.out.println("All notes of contact.. " + notes);
+            logger.info("All notes of contact... " + notes);
 
             // Delete note of a contact by note id
             String noteId = String.valueOf(notes.get(0).getId());
 
             noteApi.deleteNoteByContactId(contactIds.get(0), noteId);
 
-            System.out.println("Deleted note.. " + noteId + " "
-                    + contactIds.get(0));
+            logger.info("Deleted note... {} from Contact... {}", noteId, contactIds.get(0));
 
             notes = noteApi.getNotesByContactId(contactIds.get(0));
 
-            System.out.println("All notes of contact.. " + notes);
+            logger.info("All notes of contact... {}", notes);
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+            logger.error("API Exception", e);
         }
 
     }

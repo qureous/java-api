@@ -22,7 +22,7 @@ public class TestAgileConnection {
             new AgileConnection().getConnection();
 
         } catch (Exception e) {
-            logger.error("Connection Failed", e);
+            logger.error("API Exception", e);
         }
     }
 }

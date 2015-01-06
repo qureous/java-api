@@ -6,6 +6,8 @@ import com.agilecrm.api.ContactAPI;
 import com.agilecrm.api.DealAPI;
 import com.agilecrm.stubs.Contact;
 import com.agilecrm.stubs.Deal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +22,8 @@ import java.util.List;
  * @since March 2013
  */
 public class TestDeal {
+
+    private static final Logger logger = LoggerFactory.getLogger(TestDeal.class);
 
     public static void main(String[] args) {
         try {
@@ -52,14 +56,14 @@ public class TestDeal {
 
             deal1 = dealApi.addDeal(deal1);
 
-            System.out.println("Added deal... " + deal1);
+            logger.info("Added deal... {}", deal1);
 
             // other method to add deal
             Deal deal2 = new Deal();
 
             deal2 = dealApi.addDeal("Test Deal2", 67, 3682965l, "open");
 
-            System.out.println("Added deal... " + deal2);
+            logger.info("Added deal... {}", deal2);
 
             // Relating deal to contacts
             Deal deal3 = new Deal();
@@ -67,17 +71,17 @@ public class TestDeal {
             deal3 = dealApi.addDealToContacts("Test Deal3", 76, 36865l, "lost",
                     contactIds);
 
-            System.out.println("Added deal... " + deal3);
+            logger.info("Added deal... {}", deal3);
 
             // Get all deals
             List<Deal> deals = dealApi.getDeals();
 
-            System.out.println("All deals..." + deals);
+            logger.info("All deals... {}", deals);
 
             // Get deal by id
             deal1 = dealApi.getDealByDealId(String.valueOf(deal1.getId()));
 
-            System.out.println("Got deal..." + deal1);
+            logger.info("Got deal... {}", deal1);
 
             // Update deal
             deal1.setMilestone("won");
@@ -85,7 +89,7 @@ public class TestDeal {
 
             deal1 = dealApi.updateDeal(deal1);
 
-            System.out.println("Updated deal..." + deal1);
+            logger.info("Updated deal... {}", deal1);
 
             // Delete deal
             dealApi.deleteDealByDealId(String.valueOf(deal1.getId()));
@@ -96,9 +100,9 @@ public class TestDeal {
             dealIds.add(String.valueOf(deal3.getId()));
 
             dealApi.deleteDeals(dealIds);
+
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+            logger.error("API Exception", e);
         }
 
     }

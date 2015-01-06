@@ -8,6 +8,8 @@ import com.agilecrm.stubs.Contact.Type;
 import com.agilecrm.stubs.ContactField.FieldName;
 import com.agilecrm.stubs.Tag;
 import org.codehaus.jettison.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +25,8 @@ import java.util.Map;
  * @since March 2013
  */
 public class TestContact {
+
+    private static final Logger logger = LoggerFactory.getLogger(TestContact.class);
 
     public static void main(String[] args) {
 
@@ -49,7 +53,7 @@ public class TestContact {
 
             company = contactApi.addContact(company);
 
-            System.out.println("Added company... " + company);
+            logger.info("Added company... {}", company);
 
             // ------------------- Adding a person ----------------------------
             Contact person1 = new Contact();
@@ -78,7 +82,7 @@ public class TestContact {
 
             person1 = contactApi.addContact(person1);
 
-            System.out.println("Added person... " + person1);
+            logger.info("Added person... {}", person1);
 
             // -------------- Another method to add person --------------------
             Contact person2 = new Contact();
@@ -87,31 +91,31 @@ public class TestContact {
                     "test2@agilecrm.com", "Quality Analyst", "+1687621786",
                     "http://www.agilecrm.com");
 
-            System.out.println("Added person... " + person2);
+            logger.info("Added person... {}", person2);
 
             // --------------------- Get contacts -----------------------------
             List<Contact> contacts = contactApi.getContacts();
 
-            System.out.println("All contacts.." + contacts);
+            logger.info("All contacts... {}", contacts);
 
             // ----------------- Get contact by contact id --------------------
             Contact contact = new Contact();
 
             contact = contactApi.getContact(String.valueOf(person2.getId()));
 
-            System.out.println("Got contact by id... " + contact);
+            logger.info("Got contact by id... {}", contact);
 
             // ---------------- Get contact from email ------------------------
             contact = contactApi.getContactFromEmail("test1@agilecrm.com");
 
-            System.out.println("Got contact by email... " + contact);
+            logger.info("Got contact by email... {}", contact);
 
             // -------------------- update contact ----------------------------
             contact.setContactField(FieldName.LAST_NAME, "Update1");
 
             contact = contactApi.updateContact(contact);
 
-            System.out.println("updated contact... " + contact);
+            logger.info("updated contact... {}", contact);
 
             // --------------- update contact by id ----------------------------
             Map<FieldName, String> contactFields = new HashMap<FieldName, String>();
@@ -125,7 +129,7 @@ public class TestContact {
             contact = contactApi.updateContact(String.valueOf(person2.getId()),
                     contactFields, customFields);
 
-            System.out.println("updated contact... " + contact);
+            logger.info("updated contact... {}", contact);
 
             // ----------- Adding tags to contacts based on contact id's ------
             tags = new ArrayList<String>();
@@ -139,7 +143,7 @@ public class TestContact {
 
             contactApi.addTagsToContacts(tags, contactIds);
 
-            System.out.println("Added tags to contact ids............");
+            logger.info("Added tags to contact ids............");
 
             // ------------ Adding tag to contact based on email -------------
             Tag tag = new Tag();
@@ -147,7 +151,7 @@ public class TestContact {
 
             contactApi.addTagsToEmail(tag, "test2@agilecrm.com");
 
-            System.out.println("Added tag based on email..............");
+            logger.info("Added tag based on email..............");
 
             // ------------ delete contact by contact id --------------------
             contactApi.deleteContact(String.valueOf(person2.getId()));
@@ -161,9 +165,9 @@ public class TestContact {
 
             //-------Adds a contact property, updates if it already exists---
             contactApi.addProperty("middlename", "crm", "test1@agilecrm.com");
+
         } catch (Exception e) {
-            System.out.println("message" + e.getMessage());
-            e.printStackTrace();
+            logger.error("API Exception", e);
         }
     }
 }

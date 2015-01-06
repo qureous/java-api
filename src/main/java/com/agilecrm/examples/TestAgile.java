@@ -4,10 +4,14 @@ import com.agilecrm.api.APIManager;
 import com.agilecrm.api.AgileConnection;
 import com.agilecrm.api.ContactAPI;
 import com.agilecrm.stubs.Contact;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class TestAgile {
+
+    private static final Logger logger = LoggerFactory.getLogger(TestAgile.class);
 
     public static void main(String[] args) {
         try {
@@ -21,10 +25,11 @@ public class TestAgile {
 
             // --------------------- Get contacts -----------------------------
             List<Contact> contacts = contactApi.getContacts();
-            System.out.println("All contacts.. " + contacts);
+
+            logger.info("All contacts.. {}", contacts);
+
         } catch (Exception e) {
-            System.out.println("Exception message.. " + e.getMessage());
-            e.printStackTrace();
+            logger.error("API Exception", e);
         }
     }
 }
